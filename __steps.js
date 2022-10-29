@@ -31,3 +31,17 @@ http://localhost:5000/users?name=alex&email=alex@gmail.com&id=2
 5. npm i mongodb
 
 */
+
+/* 
+Insert:
+
+
+
+
+*/
+
+/* 
+Find:
+
+
+*/
