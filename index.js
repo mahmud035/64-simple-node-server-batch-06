@@ -30,12 +30,26 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
-client.connect((err) => {
-  const collection = client.db('simpleNode').collection('users');
-  // perform actions on the collection object
-  console.log('database connected');
-  client.close();
-});
+
+async function run() {
+  try {
+    const userCollection = client.db('simpleNode').collection('users');
+    const user = { name: 'Steve Smith', email: 'smith@gmail.com' };
+    // const result = await userCollection.insertOne(user);
+    // console.log(result);
+    app.post('/users', async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
+      console.log(result);
+      user.id = result.insertedId;
+
+      res.send(user);
+    });
+  } finally {
+  }
+}
+
+run().catch(console.dir);
 
 app.get('/users', (req, res) => {
   console.log(req.query);
@@ -51,14 +65,14 @@ app.get('/users', (req, res) => {
   }
 });
 
-app.post('/users', (req, res) => {
-  const user = req.body;
-  user.id = users.length + 1;
-  users.push(user);
+// app.post('/users', (req, res) => {
+//   const user = req.body;
+//   user.id = users.length + 1;
+//   users.push(user);
 
-  console.log(user);
-  res.send(user);
-});
+//   console.log(user);
+//   res.send(user);
+// });
 
 app.listen(Port, () => {
   console.log('Server is running on port ' + Port);
