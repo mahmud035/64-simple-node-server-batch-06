@@ -21,3 +21,13 @@ http://localhost:5000/users?name=alex&email=alex@gmail.com&id=2
 
 
 */
+
+/* 
+//* Mongodb atlas
+1. sing up mongodb atlas
+2. username & password
+3. whitelist your ip address
+4. database > connect > show entire code
+5. npm i mongodb
+
+*/

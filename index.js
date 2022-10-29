@@ -1,6 +1,7 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const app = express();
 
 const Port = process.env.PORT || 5000;
 
@@ -18,8 +19,26 @@ const users = [
   { id: 3, name: 'alex', email: 'alex@gmail.com' },
 ];
 
+//* Mongodb atlas username & password
+// username: dbuser1
+// password: WzObdjSwCU5lzVWy
+
+const uri =
+  'mongodb+srv://dbuser1:WzObdjSwCU5lzVWy@cluster0.yeflywl.mongodb.net/?retryWrites=true&w=majority';
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
+client.connect((err) => {
+  const collection = client.db('simpleNode').collection('users');
+  // perform actions on the collection object
+  console.log('database connected');
+  client.close();
+});
+
 app.get('/users', (req, res) => {
-  console.log(req.query); 
+  console.log(req.query);
   if (req.query.name) {
     // filters users by query
     const search = req.query.name;
